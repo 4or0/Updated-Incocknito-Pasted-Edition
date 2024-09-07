@@ -1,6 +1,6 @@
 # Updated-Incocknito-Pasted-Edition
 
-This is the official and latest source code of **Updated-Incocknito-Pasted-Edition**. This Is A Better Version Off https://github.com/Incognito-Roblox/Incognito/ And Is More Skidded Because Its Updated
+This is the official and latest source code of **Updated-Incocknito-Pasted-Edition**.
 
 ## Disclaimer
 Please note that the version of the software provided here was unfinished at the time. As such, it does not have many functions yet.
@@ -15,7 +15,6 @@ This repository is a resource for learning and understanding. We hope that by ma
 
 ## License
 Please ensure you **[read and follow the license](/LICENSE.md)** associated with this project. The license outlines the permissible uses and restrictions for this code. Adhering to these terms is crucial for legal use and further development of the software.
-
 
 ## Credits
 Thanks To These People -
