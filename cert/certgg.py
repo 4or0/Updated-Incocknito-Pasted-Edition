@@ -30,9 +30,7 @@ class CertAPI:
 
     def __init__(self):
         self.ClientBridge = RBXBridge()
-        self.__Configuration = {}
-        self.JestGlobals = None
-        
+        self.__Configuration = {}   
         
     def Inject(self) -> int:
         if self.__InjectStatus > 2 and (self.__ClientInfo and self.__ClientInfo[0] == fetch_roblox_pid()):
@@ -44,7 +42,7 @@ class CertAPI:
             return 0x2
 
         self.__InjectStatus = 2
-        info("RBX PID: " + str(new_pid))
+        info("ProcessId: " + str(new_pid))
 
         RenderView = FetchRenderView(new_pid)
 
@@ -65,89 +63,51 @@ class CertAPI:
         DataModel = Instance(DataModelAddy)
         offset("DataModel: " + str(DataModel.Address))
 
-        KURENGUI = DataModel.FindFirstChildOfClass("CoreGui")
-        SCRIPTINATOR = DataModel.FindFirstChildOfClass("ScriptContext")
-        GESCHPEICHERTER = DataModel.FindFirstChildOfClass("RobloxReplicatedStorage")
+        CoreGui = DataModel.FindFirstChildOfClass("CoreGui")
+        ScriptContext = DataModel.FindFirstChildOfClass("ScriptContext")
+        RobloxReplicatedStorage = DataModel.FindFirstChildOfClass("RobloxReplicatedStorage")
 
-        BOBLOXXXXX = KURENGUI.FindFirstChild("RobloxGui")
-        MODULE = BOBLOXXXXX.FindFirstChild("Modules")
+        RobloxGui = CoreGui.FindFirstChild("RobloxGui")
+        Modules = RobloxGui.FindFirstChild("Modules")
 
-        offset(KURENGUI, BOBLOXXXXX, MODULE)
-        offset(GESCHPEICHERTER, SCRIPTINATOR)
+        offset(CoreGui, RobloxGui, Modules)
+        offset(RobloxReplicatedStorage, ScriptContext)
 
-
-        ## BYTECODE POINTER
-        #LocalPlayer = DataModel.FindFirstChildOfClass("Players").LocalPlayer
-
-        #PlayerScripts = LocalPlayer.FindFirstChild("PlayerScripts")
-
-        #PlayerScriptsLoader = PlayerScripts.FindFirstChild("PlayerScriptsLoader")
-
-        #print(PlayerScriptsLoader)
-
-        #def GetBytecodeOffset(target: Instance) -> int:
-        #    for offset in range(0x100, 0x200, 0x4):
-        #        pointer = Process.read_longlong(target.Address + offset)
-
-        #        if pointer < 1000:
-        #            continue
-
-        #        bytecodeptr = Process.read_longlong(pointer + 0x10)
-        #        bytecodestring = Process.read_bytes(bytecodeptr, 10).hex()
-
-        #        print(offset,hex(pointer),bytecodestring)
-
-        #        if bytecodestring == "c837ed48a208531dca19":
-        #            return offset, pointer
-                
-        #    return 0
-
-        #skibidi = GetBytecodeOffset(PlayerScriptsLoader)    
-        ##
-
-        oldjestibytes = None
-        oldPolibytes = None
-
-        if SCRIPTINATOR.FindFirstChild("StarterScript").Address > 1000:
+        if ScriptContext.FindFirstChild("StarterScript").Address > 1000:
             info("Ingame Attaching")
+            
+            PlayerList = Modules.FindFirstChild("PlayerList")
+            PlayerListManager = PlayerList.FindFirstChild("PlayerListManager")
 
-            SCHPIELERMANIMATURONEBRETT = MODULE.FindFirstChild("PlayerList")
-            boboboboboboboboobobobo = SCHPIELERMANIMATURONEBRETT.FindFirstChild("PlayerListManager")
+            offset(PlayerList, PlayerListManager)
 
-            offset(SCHPIELERMANIMATURONEBRETT, boboboboboboboboobobobo)
-
-            if boboboboboboboboobobobo.Address < 1000:
+            if PlayerListManager.Address < 1000:
                 self.__InjectStatus = 1
                 return 0x4
             
-            Flipbidiboboboboo = DataModel.FindFirstChild("CorePackages")
-            SkibidiDopDopDop = Flipbidiboboboboo.FindFirstChild("JestGlobals", True)
+            CorePackages = DataModel.FindFirstChild("CorePackages")
+            JestGlobals = CorePackages.FindFirstChild("JestGlobals", True)
 
-            offset(Flipbidiboboboboo, SkibidiDopDopDop)
+            offset(CorePackages, JestGlobals)
+            
+            JestGlobals.SetModulesBypass()
+            PlayerListManager.Spoof(JestGlobals)
 
-            #time.sleep(150)
-
-            SkibidiDopDopDop.SetModuleBypass()
-            boboboboboboboboobobobo.Spoof(SkibidiDopDopDop)
-
-            SkibidiDopDopDop.Bytecode = init_script_bytecode
+            JestGlobals.Bytecode = init_script_bytecode
             initialize_script_hook()
 
             time.sleep(1)
 
-            boboboboboboboboobobobo.Spoof(boboboboboboboboobobobo)
-            SkibidiDopDopDop.ResetModule()
-
-            self.JestGlobals = SkibidiDopDopDop
+            PlayerListManager.Spoof(PlayerListManager)
+            JestGlobals.ResetModules()
 
             info("Ingame Attached")
         else:
             info("Homescreen Attaching")
+            
+            ChatUtil = Modules.FindFirstChild("ChatUtil")
 
-            #Skbidibdi = MODULE.FindFirstChild("Common")
-            TestTestTest = MODULE.FindFirstChild("ChatUtil")
-
-            TestTestTest.Bytecode = init_script_bytecode
+            ChatUtil.Bytecode = init_script_bytecode
         
             info("Homescreen Attached")
 
@@ -177,13 +137,13 @@ class CertAPI:
                 return 0x5
 
             DataModel = Instance(DataModelAddy)
-            GESCHPEICHERTER = DataModel.FindFirstChildOfClass("RobloxReplicatedStorage")
+            RobloxReplicatedStorage = DataModel.FindFirstChildOfClass("RobloxReplicatedStorage")
             
-            offset(DataModel, GESCHPEICHERTER)
+            offset(DataModel, RobloxReplicatedStorage)
 
         bridge("Preparing Bridge")
 
-        BridgeContainer = GESCHPEICHERTER.WaitForChild("Bridge", 15)
+        BridgeContainer = RobloxReplicatedStorage.WaitForChild("Bridge", 15)
         offset(BridgeContainer)
 
         if BridgeContainer.Address < 1000:
@@ -202,7 +162,7 @@ class CertAPI:
 
         bridge("Bridge Started")
 
-        self.SavageFileSystem()
+        self.SkiddedFileSystem()
         self.RunScript(getAutoExec())
 
         if ("AutoExecutePath" in self.__Configuration) and os.path.isdir(self.__Configuration["AutoExecutePath"]):
@@ -233,7 +193,7 @@ class CertAPI:
 
         return Exception("Path of the directory is invalid") 
 
-    def SavageFileSystem(self):
+    def SkiddedFileSystem(self):
         def loop_sync():
             while True:
                 self.ClientBridge.Send("synchronize_files")
@@ -243,9 +203,9 @@ class CertAPI:
 
     def RunScript(self, source: str):
         if self.__InjectStatus == 5 and not self.ClientBridge.RobloxTerminated:
-            CurrentScript = self.ClientBridge.ModuleHolder.Value
+            CurrentScript = self.ClientBridge.ModulesHolder.Value
 
-            CurrentScript.SetModuleBypass()
+            CurrentScript.SetModulesBypass()
             CurrentScript.Bytecode = RBXBytecode.Compile(
                 f"return function(...) {source} \nend",
                 f"execute-{random_string()}.btc"
