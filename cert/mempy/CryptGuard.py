@@ -17,14 +17,6 @@ global Cert
 Cert = CertAPI()
 Cert.SetAutoExecPath(autoexec_path)
 
-def CryptGuard():
-    threading.Thread(target=LaunchCertMain, daemon=True).start()
-
-    time.sleep(1)
-
-
-
-
 Cert_ERRORCODES = {
     0x0: "Successfully injected!",
     0x1: "Currently injecting!",
@@ -34,6 +26,11 @@ Cert_ERRORCODES = {
     0x5: "Roblox terminated while injecting!",
     0x6: "Failed to find Bridge!"
 }
+
+def CryptGuard():
+    threading.Thread(target=LaunchCertMain, daemon=True).start()
+
+    time.sleep(1)
 
 async def execute(code):
     input_value = code
@@ -73,10 +70,6 @@ def start_websocket_server():
     server = uvicorn.Server(config)
     print("WebSocket Server Started")
     server.run()
-
-
-
-
 
 def LaunchCertMain():
     launchstatus = Cert.Inject()
