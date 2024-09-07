@@ -16,25 +16,23 @@ InternalUI = "false"
 
 class Offsets:
     # thanks to 4or0 for offsets
-    DataModel = 0x198
-
     Name = 0x50
     Children = 0x58
     Parent = 0x68
     ClassDescriptor = 0x18
 
-    ModuleFlags = 0x1a4
-
+    DataModel = 0x198
     DataModelHolder = 0x118
 
+    LocalPlayer = 0x108
+    ValueBase = 0xc8
+
     BytecodeSize = 0x20
+    ModuleFlags = 0x1a4
     Bytecode = {
         "LocalScript": 0x1c0,
         "ModuleScript": 0x160
     }
-
-    LocalPlayer = 0x108
-    ObjectValue = 0xc8
 
 
 Capabilities = {
