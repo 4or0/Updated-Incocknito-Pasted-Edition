@@ -15,7 +15,7 @@ ExecName = "Incocknito skid version"
 InternalUI = "false"
 
 class Offsets:
-    # thanks to whitecat for offsets
+    # thanks to 4or0 for offsets
     DataModel = 0x198
 
     Name = 0x50
