@@ -1,3 +1,4 @@
+# Websrv dont work rn, adding dif method to execute
 from cert.utils.base import fetch_roblox_pid, initialize, initialize_script_hook, random_string
 from cert.utils.bytecode import Bytecode as RBXBytecode
 from cert.utils.utils import Offsets, getAutoExec
@@ -179,11 +180,12 @@ class CertAPI:
 
         return Exception("Path of the directory is invalid") 
 
+
     def RunScript(self, source: str):
         if self.__InjectStatus == 5 and not self.ClientBridge.RobloxTerminated:
             CurrentScript = self.ClientBridge.ModuleHolder.Value
 
-            CurrentScript.SetModulesBypass()
+            CurrentScript.SetModuleBypass()
             CurrentScript.Bytecode = RBXBytecode.Compile(
                 f"return function(...) {source} \nend",
                 f"execute-{random_string()}.btc"
