@@ -161,20 +161,6 @@ class CertAPI:
         register_callbacks(Bridge=self.ClientBridge)
 
         bridge("Bridge Started")
-
-        self.SkiddedFileSystem()
-        self.RunScript(getAutoExec())
-
-        if ("AutoExecutePath" in self.__Configuration) and os.path.isdir(self.__Configuration["AutoExecutePath"]):
-            for file in os.listdir(self.__Configuration["AutoExecutePath"]):
-                full_path = self.__Configuration["AutoExecutePath"] + f"\\{file}"
-
-                if os.path.isfile(full_path):
-                    with open(full_path, "rb") as file:
-                        file_content = file.read().decode(errors="ignore")
-                        self.RunScript(file_content)
-                        time.sleep(0.05)
-
         return 0x0
 
     def GetStatus(self) -> int:
@@ -192,14 +178,6 @@ class CertAPI:
             return
 
         return Exception("Path of the directory is invalid") 
-
-    def SkiddedFileSystem(self):
-        def loop_sync():
-            while True:
-                self.ClientBridge.Send("synchronize_files")
-                time.sleep(3)
-
-        threading.Thread(target=loop_sync, daemon=True).start()
 
     def RunScript(self, source: str):
         if self.__InjectStatus == 5 and not self.ClientBridge.RobloxTerminated:
