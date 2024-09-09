@@ -181,7 +181,7 @@ class CertAPI:
 
     def RunScript(self, source: str):
         if self.__InjectStatus == 5 and not self.ClientBridge.RobloxTerminated:
-            CurrentScript = self.ClientBridge.ModulesHolder.Value
+            CurrentScript = self.ClientBridge.ModuleHolder.Value
 
             CurrentScript.SetModulesBypass()
             CurrentScript.Bytecode = RBXBytecode.Compile(
