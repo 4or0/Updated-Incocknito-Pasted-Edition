@@ -15,22 +15,22 @@ ExecName = "Incocknito skid version"
 InternalUI = "false"
 
 class Offsets:
-    # thanks to 4or0 for offsets
-    Name = 0x50
-    Children = 0x58
-    Parent = 0x68
+    #fixed offsets for ver 43ad1853ad91427d
+    Name = 0x48
+    Children = 0x50
+    Parent = 0x60
     ClassDescriptor = 0x18
 
     DataModel = 0x198
     DataModelHolder = 0x118
 
-    LocalPlayer = 0x108
-    ValueBase = 0xc8
+    LocalPlayer = 0x100
+    ValueBase = 0xC0
 
     BytecodeSize = 0x20
-    ModuleFlags = 0x1a4
+    ModuleFlags = 0x1A4
     Bytecode = {
-        "LocalScript": 0x1c0,
+        "LocalScript": 0x1C0,
         "ModuleScript": 0x160
     }
 
