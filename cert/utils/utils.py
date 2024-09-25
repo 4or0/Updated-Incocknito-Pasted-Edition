@@ -15,16 +15,16 @@ ExecName = "Incocknito skid version"
 InternalUI = "false"
 
 class Offsets:
-    #fixed offsets for ver 43ad1853ad91427d
-    Name = 0x48
-    Children = 0x50
-    Parent = 0x60
+    #fixed offsets for version-b591875ddfbc4294
+    Name = 0x50
+    Children = 0x58
+    Parent = 0x28
     ClassDescriptor = 0x18
 
     DataModel = 0x198
     DataModelHolder = 0x118
 
-    LocalPlayer = 0x100
+    LocalPlayer = 0x110
     ValueBase = 0xC0
 
     BytecodeSize = 0x20
